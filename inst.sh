@@ -27,8 +27,8 @@
 
 forcemaintainmode='0'                             # 0:all put in maintain,1,just devdeskos in maintain
 
-export autoDEBMIRROR0=https://github.com/minlearn/inst/raw/master
-export autoDEBMIRROR1=https://gitlab.com/minlearn/inst/-/raw/master
+export autoDEBMIRROR0=https://github.com/gnourt201/inst/raw/master
+export autoDEBMIRROR1=https://github.com/gnourt201/inst/raw/master
 export FORCEDEBMIRROR=''                          # force apply a fixed mirror/targetddurl selection to force override autoselectdebmirror results based on -t -m args given
 export tmpTARGETMODE='0'                          # 0:WGETDD INSTMODE ONLY 1:CLOUDDDINSTALL+BUILD MIXTURE,2,3,nc install mode,defaultly it sholudbe 0, 4 inplace dd mode for devdeskct(lxcct,or kvmct) or devdeskde
 export tmpTARGET=''                               # dummy(for -d only),debianbase,onekeydevdesk,devdeskos,lxcdebtpl,lxcdebiantpl,qemudebtpl,qemudebiantpl,devdeskosfull,debian,debian10restore,debianct,devdeskde,devdeskct
@@ -1908,14 +1908,14 @@ curl --max-time 5 --silent --output /dev/null https://counter.minlearn.org/{dsrk
   [[ "$tmpINSTWITHMANUAL" == '1' && "$tmpINSTWITHBORE" != '' ]] && printf "\n %-20s" "`echo -en \" \033[32m if netcfg valid,connected to sshd@publicIPofthisserver:22 or boresrvip:22 without passwords\033[0m \"`"
   [[ "$tmpINSTWITHMANUAL" == '1' ]] && printf "\n %-20s" "`echo -en \" \033[32m if netcfg unvalid,the system will roll to normal current running os after 5 mins\033[0m \033[0m ] \"`"
 
-  echo;for time in `seq -w 20 -1 0`;do echo -n -e "\b\b$time";sleep 1;done;sudo reboot -f >/dev/null 2>&1;
+  echo;for time in `seq -w 00 -1 0`;do echo -n -e "\b\b$time";sleep 1;done;sudo reboot -f >/dev/null 2>&1;
 }
 
 [[ "$tmpBUILD" == "11" ]] && [[ "$tmpTARGETMODE" != "1" ]] && {
   printf "\n ✔ %-30s" "Prepare reboot ... " && { GRUBID=`bcdedit /enum ACTIVE|sed 's/\r//g'|tail -n4|head -n 1|awk -F ' ' '{ print $2}'`;bcdedit /bootsequence $GRUBID /addfirst; }
   trap 'echo; echo "- aborting by user, restoreall"; restoreall;exit 1' SIGINT
   printf "\n ✔ %-30s" "Preparation done! `echo -n \" wait till auto reboot after 20s,or ctlc to interrupt \"`......"
-  echo;for time in `seq -w 20 -1 0`;do echo -n -e "\b\b$time";sleep 1;done;shutdown -t 0 -r -f >/dev/null 2>&1;
+  echo;for time in `seq -w 00 -1 0`;do echo -n -e "\b\b$time";sleep 1;done;shutdown -t 0 -r -f >/dev/null 2>&1;
 }
 
 [[ "$tmpBUILD" == "1" ]] && [[ "$tmpTARGETMODE" != "1" ]] && {
@@ -1924,7 +1924,7 @@ curl --max-time 5 --silent --output /dev/null https://counter.minlearn.org/{dsrk
   printf "\n ✔ %-30s" "Prepare reboot ... " && { sudo grub-mkstandalone -o /Volumes/EFI/out.efi -O x86_64-efi /vmlinuz_1kddinst=$topdir/$remasteringdir/boot/vmlinuz_1kddinst /initrfs_1kddinst.img=$topdir/$remasteringdir/boot/initrfs_1kddinst.img /boot/grub/grub.cfg=$topdir/$remasteringdir/boot/grub.new;sudo bless --mount /Volumes/EFI --setBoot --file /Volumes/EFI/out.efi --shortform; }
   trap 'echo; echo "- aborting by user, restoreall"; restoreall;exit 1' SIGINT
   printf "\n ✔ %-30s" "Preparation done! `echo -n \" wait till auto reboot after 20s,or ctlc to interrupt \"`......"
-  echo;for time in `seq -w 20 -1 0`;do echo -n -e "\b\b$time";sleep 1;done;sudo reboot -f >/dev/null 2>&1;
+  echo;for time in `seq -w 00 -1 0`;do echo -n -e "\b\b$time";sleep 1;done;sudo reboot -f >/dev/null 2>&1;
 }
 
 [[ "$tmpTARGETMODE" == '4' && "$tmpTARGET" != 'devdeskde' ]] && {
